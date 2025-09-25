@@ -21,7 +21,7 @@ public class ClientService {
 
   public List<MovementDTO> getMovementsByAccountId(Long bankAccountId) {
     List<Movement> movements = clientRepository.findMovementsByBankAccountId(bankAccountId);
-    if (movements.size() == 0) {
+    if (movements.isEmpty()) {
       throw new MovementsNotFoundException(bankAccountId);
     }
     return movementMapper.toDtoList(movements);

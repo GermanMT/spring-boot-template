@@ -1,14 +1,16 @@
-package es.nextdigital.demo.client.model;
+package es.nextdigital.demo.card.model;
 
 import es.nextdigital.demo.account.model.Account;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,17 +22,21 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "clients")
-public class Client {
+@Table(name = "cards")
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Card {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank private String name;
+  @NotBlank
+  @Column(unique = true)
+  private String cardNumber;
 
-  @NotBlank @Email private String email;
+  @NotBlank
+  private String bankName;
 
-  @OneToOne
+  @OneToOne(cascade = {})
   @JoinColumn(name = "account_id", referencedColumnName = "id")
   private Account bankAccount;
 }

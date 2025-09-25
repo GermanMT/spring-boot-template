@@ -3,6 +3,7 @@ package es.nextdigital.demo.client.controller;
 import es.nextdigital.demo.client.service.ClientService;
 import es.nextdigital.demo.movement.dto.MovementDTO;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,9 @@ public class ClientController {
     this.clientService = clientService;
   }
 
-  @GetMapping("/{id}")
-  public List<MovementDTO> getMovementsByAccount(@PathVariable Long id) {
-    return clientService.getMovementsByAccountId(id);
+  @GetMapping("/{accountId}/movements")
+  public ResponseEntity<List<MovementDTO>> getMovementsByAccount(@PathVariable Long accountId) {
+    List<MovementDTO> movements = clientService.getMovementsByAccountId(accountId);
+    return ResponseEntity.ok(movements);
   }
 }
