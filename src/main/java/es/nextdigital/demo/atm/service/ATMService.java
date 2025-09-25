@@ -56,30 +56,24 @@ public class ATMService {
             .findByCardNumber(request.getCardNumber())
             .orElseThrow(() -> new CardNotFoundException("Card not found"));
 
-    // Check if ATM has enough cash
     if (atm.getAvailableCash().compareTo(request.getAmount()) < 0) {
       throw new InsufficientFundsException("ATM does not have enough cash");
     }
 
-    // Calculate fee and total amount
     BigDecimal fee = atm.calculateFee(card.getBankName());
     BigDecimal totalAmount = request.getAmount().add(fee);
 
-    // Check if account has sufficient funds
     if (card.getBankAccount().getAccountAmount().compareTo(totalAmount) < 0) {
       throw new InsufficientFundsException("Insufficient balance in account");
     }
 
-    // Process withdrawal
     card.getBankAccount()
         .setAccountAmount(card.getBankAccount().getAccountAmount().subtract(totalAmount));
     atm.setAvailableCash(atm.getAvailableCash().subtract(request.getAmount()));
 
-    // Save changes
     accountRepository.save(card.getBankAccount());
     atmRepository.save(atm);
 
-    // Record transaction
     Movement withdrawalMovement = new Movement();
     withdrawalMovement.setBankAccount(card.getBankAccount());
     withdrawalMovement.setMovementAmount(request.getAmount().negate());
