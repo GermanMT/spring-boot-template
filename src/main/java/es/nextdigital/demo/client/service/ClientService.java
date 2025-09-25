@@ -1,5 +1,6 @@
 package es.nextdigital.demo.client.service;
 
+import es.nextdigital.demo.client.exception.MovementsNotFoundException;
 import es.nextdigital.demo.client.repository.ClientRepository;
 import es.nextdigital.demo.movement.dto.MovementDTO;
 import es.nextdigital.demo.movement.mapper.MovementMapper;
@@ -20,6 +21,9 @@ public class ClientService {
 
   public List<MovementDTO> getMovementsByAccountId(Long bankAccountId) {
     List<Movement> movements = clientRepository.findMovementsByBankAccountId(bankAccountId);
+    if (movements.size() == 0) {
+      throw new MovementsNotFoundException(bankAccountId);
+    }
     return movementMapper.toDtoList(movements);
   }
 }
