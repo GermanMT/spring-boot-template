@@ -66,4 +66,4 @@ jobs:
             ghcr.io/${{ steps.repo_owner.outputs.owner_lc }}/demo-backend:latest
             ghcr.io/${{ steps.repo_owner.outputs.owner_lc }}/demo-backend:${{ steps.get_variables.outputs.VERSION }}
           provenance: true
-          sbom: tru
+          sbom: true
