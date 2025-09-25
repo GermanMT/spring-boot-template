@@ -21,7 +21,8 @@ public class ATMController {
   }
 
   @PostMapping("/withdraw")
-  public ResponseEntity<WithdrawalResponseDTO> withdrawMoney(@Valid @RequestBody WithdrawalRequestDTO request) {
+  public ResponseEntity<WithdrawalResponseDTO> withdrawMoney(
+      @Valid @RequestBody WithdrawalRequestDTO request) {
     WithdrawalResponseDTO response = atmService.withdrawMoney(request);
     return ResponseEntity.ok(response);
   }

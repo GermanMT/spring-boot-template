@@ -19,8 +19,8 @@ public class WithdrawalResponseDTO {
   private LocalDateTime timestamp;
   private String atmLocation;
 
-  public static WithdrawalResponseDTO success(BigDecimal amount, BigDecimal fee, 
-      BigDecimal remainingBalance, String atmLocation) {
+  public static WithdrawalResponseDTO success(
+      BigDecimal amount, BigDecimal fee, BigDecimal remainingBalance, String atmLocation) {
     WithdrawalResponseDTO response = new WithdrawalResponseDTO();
     response.setAmountWithdrawn(amount);
     response.setFee(fee);

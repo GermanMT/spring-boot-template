@@ -29,7 +29,6 @@ public class DataLoader {
       CardRepository cardRepository,
       ATMRepository atmRepository) {
     return args -> {
-
       Account account1 = new Account();
       account1.setAccountAmount(BigDecimal.valueOf(1000));
       account1 = accountRepository.save(account1);

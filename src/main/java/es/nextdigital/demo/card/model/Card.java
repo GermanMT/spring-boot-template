@@ -33,8 +33,7 @@ public abstract class Card {
   @Column(unique = true)
   private String cardNumber;
 
-  @NotBlank
-  private String bankName;
+  @NotBlank private String bankName;
 
   @OneToOne(cascade = {})
   @JoinColumn(name = "account_id", referencedColumnName = "id")

@@ -24,8 +24,11 @@ public class ATMService {
   private final AccountRepository accountRepository;
   private final MovementRepository movementRepository;
 
-  public ATMService(ATMRepository atmRepository, CardRepository cardRepository,
-      AccountRepository accountRepository, MovementRepository movementRepository) {
+  public ATMService(
+      ATMRepository atmRepository,
+      CardRepository cardRepository,
+      AccountRepository accountRepository,
+      MovementRepository movementRepository) {
     this.atmRepository = atmRepository;
     this.cardRepository = cardRepository;
     this.accountRepository = accountRepository;
@@ -43,11 +46,15 @@ public class ATMService {
       throw new IllegalArgumentException("Amount must be positive");
     }
 
-    ATM atm = atmRepository.findById(request.getAtmId())
-        .orElseThrow(() -> new ATMNotFoundException("ATM not found"));
+    ATM atm =
+        atmRepository
+            .findById(request.getAtmId())
+            .orElseThrow(() -> new ATMNotFoundException("ATM not found"));
 
-    Card card = cardRepository.findByCardNumber(request.getCardNumber())
-        .orElseThrow(() -> new CardNotFoundException("Card not found"));
+    Card card =
+        cardRepository
+            .findByCardNumber(request.getCardNumber())
+            .orElseThrow(() -> new CardNotFoundException("Card not found"));
 
     // Check if ATM has enough cash
     if (atm.getAvailableCash().compareTo(request.getAmount()) < 0) {
@@ -64,8 +71,8 @@ public class ATMService {
     }
 
     // Process withdrawal
-    card.getBankAccount().setAccountAmount(
-        card.getBankAccount().getAccountAmount().subtract(totalAmount));
+    card.getBankAccount()
+        .setAccountAmount(card.getBankAccount().getAccountAmount().subtract(totalAmount));
     atm.setAvailableCash(atm.getAvailableCash().subtract(request.getAmount()));
 
     // Save changes
