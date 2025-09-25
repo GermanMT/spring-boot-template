@@ -1,7 +1,5 @@
 package es.nextdigital.demo.movement.model;
 
-import java.math.BigDecimal;
-
 import es.nextdigital.demo.account.model.Account;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,8 +28,7 @@ public class Movement {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull
-  private BigDecimal movementAmount;
+  @NotNull private BigDecimal movementAmount;
 
   @Enumerated(EnumType.STRING)
   private Type type;

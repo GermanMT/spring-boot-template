@@ -27,12 +27,9 @@ public class Client {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank
-  private String name;
+  @NotBlank private String name;
 
-  @NotBlank
-  @Email
-  private String email;
+  @NotBlank @Email private String email;
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "account_id", referencedColumnName = "id")

@@ -1,8 +1,5 @@
 package es.nextdigital.demo.account.model;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import es.nextdigital.demo.client.model.Client;
 import es.nextdigital.demo.movement.model.Movement;
 import jakarta.persistence.Entity;
@@ -14,6 +11,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
+import java.math.BigDecimal;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,9 +29,7 @@ public class Account {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull
-  @PositiveOrZero
-  private BigDecimal accountAmount;
+  @NotNull @PositiveOrZero private BigDecimal accountAmount;
 
   @OneToOne(mappedBy = "bankAccount")
   private Client client;
