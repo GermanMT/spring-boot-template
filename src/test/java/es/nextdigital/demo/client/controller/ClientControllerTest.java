@@ -1,6 +1,7 @@
 package es.nextdigital.demo.client.controller;
 
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -52,7 +53,7 @@ class ClientControllerTest {
     when(clientService.getMovementsByAccountId(accountId)).thenReturn(movements);
 
     mockMvc
-        .perform(get("/clients/{id}", accountId).contentType(MediaType.APPLICATION_JSON))
+        .perform(get("/clients/{accountId}/movements", accountId).contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.length()").value(2))
@@ -65,18 +66,16 @@ class ClientControllerTest {
   }
 
   @Test
-  @DisplayName("Should return empty list when account has no movements")
-  void getMovementsByAccount_ShouldReturnEmptyList_WhenAccountHasNoMovements() throws Exception {
+  @DisplayName("Should return 404 when account has no movements")
+  void getMovementsByAccount_ShouldReturn404_WhenAccountHasNoMovements() throws Exception {
     Long accountId = 1L;
-    List<MovementDTO> emptyMovements = Collections.emptyList();
 
-    when(clientService.getMovementsByAccountId(accountId)).thenReturn(emptyMovements);
+    when(clientService.getMovementsByAccountId(accountId))
+        .thenThrow(new es.nextdigital.demo.client.exception.MovementsNotFoundException(accountId));
 
     mockMvc
-        .perform(get("/clients/{id}", accountId).contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.length()").value(0));
+        .perform(get("/clients/{accountId}/movements", accountId).contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound());
 
     verify(clientService, times(1)).getMovementsByAccountId(accountId);
   }
@@ -90,7 +89,7 @@ class ClientControllerTest {
     when(clientService.getMovementsByAccountId(largeAccountId)).thenReturn(movements);
 
     mockMvc
-        .perform(get("/clients/{id}", largeAccountId).contentType(MediaType.APPLICATION_JSON))
+        .perform(get("/clients/{accountId}/movements", largeAccountId).contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.length()").value(1));
 
@@ -101,7 +100,7 @@ class ClientControllerTest {
   @DisplayName("Should return 400 when account ID is not a valid number")
   void getMovementsByAccount_ShouldReturn400_WhenAccountIdIsInvalid() throws Exception {
     mockMvc
-        .perform(get("/clients/{id}", "invalid-id").contentType(MediaType.APPLICATION_JSON))
+        .perform(get("/clients/{accountId}/movements", "invalid-id").contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isBadRequest());
 
     verify(clientService, never()).getMovementsByAccountId(anyLong());
@@ -116,7 +115,7 @@ class ClientControllerTest {
     when(clientService.getMovementsByAccountId(accountId)).thenReturn(movements);
 
     mockMvc
-        .perform(get("/clients/{id}", accountId).contentType(MediaType.APPLICATION_JSON))
+        .perform(get("/clients/{accountId}/movements", accountId).contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk());
 
     verify(clientService, times(1)).getMovementsByAccountId(eq(accountId));

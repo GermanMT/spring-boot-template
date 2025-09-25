@@ -31,7 +31,7 @@ class ClientIntegrationTest {
   @DisplayName(
       "Should return movements when account exists and has movements (using preloaded data)")
   void getMovementsByAccount_ShouldReturnMovements_WhenAccountExists() throws Exception {
-    String url = "http://localhost:" + port + "/clients/1";
+    String url = "http://localhost:" + port + "/clients/1/movements";
 
     ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
@@ -49,7 +49,7 @@ class ClientIntegrationTest {
   @Test
   @DisplayName("Should return 404 when account has no movements")
   void getMovementsByAccount_ShouldReturn404_WhenAccountHasNoMovements() {
-    String url = "http://localhost:" + port + "/clients/999";
+    String url = "http://localhost:" + port + "/clients/999/movements";
 
     ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
@@ -59,7 +59,7 @@ class ClientIntegrationTest {
   @Test
   @DisplayName("Should return 400 for invalid account ID format")
   void getMovementsByAccount_ShouldReturn400_WhenInvalidIdFormat() {
-    String url = "http://localhost:" + port + "/clients/invalid-id";
+    String url = "http://localhost:" + port + "/clients/invalid-id/movements";
 
     ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 

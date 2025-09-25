@@ -33,16 +33,19 @@ class ClientRepositoryIntegrationTest {
 
   @BeforeEach
   void setUp() {
+    // First persist the account
+    testAccount = new Account();
+    testAccount.setAccountAmount(new BigDecimal("1000.00"));
+    entityManager.persistAndFlush(testAccount);
+
+    // Then create client with the persisted account
     testClient = new Client();
     testClient.setName("John Doe");
     testClient.setEmail("john.doe@example.com");
-
-    testAccount = new Account();
-    testAccount.setAccountAmount(new BigDecimal("1000.00"));
-    testAccount.setClient(testClient);
-
     testClient.setBankAccount(testAccount);
+    entityManager.persistAndFlush(testClient);
 
+    // Create movements
     movement1 = new Movement();
     movement1.setMovementAmount(new BigDecimal("100.00"));
     movement1.setType(Type.CASH);
@@ -58,7 +61,6 @@ class ClientRepositoryIntegrationTest {
     movement3.setType(Type.FEE);
     movement3.setBankAccount(testAccount);
 
-    entityManager.persistAndFlush(testClient);
     entityManager.persistAndFlush(movement1);
     entityManager.persistAndFlush(movement2);
     entityManager.persistAndFlush(movement3);
