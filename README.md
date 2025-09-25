@@ -1,15 +1,68 @@
 # Spring Boot Template
 
-This is a Spring Boot template that can be customized as per your requirements.
+This is a Spring Boot template that includes a REST API for managing clients, accounts, and movements with comprehensive test coverage and Docker support.
+
+## Features
+
+- **REST API** for client movements management
+- **JPQL queries** for complex data retrieval
+- **Comprehensive testing** with unit, integration, and end-to-end tests
+- **Docker support** for easy deployment
+- **GitHub Actions** for continuous integration
+- **Exception handling** with custom error responses
+- **Data validation** and mapping with MapStruct
 
 ## Getting Started
 
-To start using this Spring Boot template, follow these steps:
+### Prerequisites
 
-1. Clone or download the template repository.
-2. Open the project in your preferred Integrated Development Environment (IDE).
-3. Customize the project by modifying the source code, configurations, and dependencies as necessary.
-4. Build and run the project using the provided build tools, such as Maven or Gradle.
+- Java 17 or higher
+- Maven 3.6 or higher
+- Docker (optional, for containerized deployment)
+
+### Local Development
+
+#### Clone the repository*
+   ```bash
+   git clone https://github.com/GermanMT/spring-boot-template
+   cd spring-boot-template
+   ```
+
+#### Run with your machine Spring Boot
+
+1. **Run the application**
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+2. **Access the application**
+   - API Base URL: `http://localhost:8080`
+   - H2 Console: `http://localhost:8080/h2-console`
+   - Swagger UI: `http://localhost:8080/swagger-ui.html`
+
+#### Build and Run with Docker Compose
+```bash
+docker-compose -f dev/docker-compose.yml up --build
+```
+
+### Running Tests
+
+#### Run All Tests
+```bash
+./mvnw test
+```
+
+#### Run Specific Test Categories
+```bash
+# Unit tests only
+./mvnw test -Dtest="*Test"
+
+# Integration tests only
+./mvnw test -Dtest="*IntegrationTest"
+
+# Repository tests only
+./mvnw test -Dtest="*RepositoryIntegrationTest"
+```
 
 ## Documentation
 
