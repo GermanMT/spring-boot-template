@@ -92,7 +92,8 @@ class ClientServiceTest {
 
     when(clientRepository.findMovementsByBankAccountId(bankAccountId)).thenReturn(emptyMovements);
 
-    assertThrows(es.nextdigital.demo.client.exception.MovementsNotFoundException.class, 
+    assertThrows(
+        es.nextdigital.demo.client.exception.MovementsNotFoundException.class,
         () -> clientService.getMovementsByAccountId(bankAccountId));
 
     verify(clientRepository, times(1)).findMovementsByBankAccountId(bankAccountId);
@@ -107,7 +108,8 @@ class ClientServiceTest {
 
     when(clientRepository.findMovementsByBankAccountId(bankAccountId)).thenReturn(movements);
 
-    assertThrows(es.nextdigital.demo.client.exception.MovementsNotFoundException.class, 
+    assertThrows(
+        es.nextdigital.demo.client.exception.MovementsNotFoundException.class,
         () -> clientService.getMovementsByAccountId(bankAccountId));
 
     verify(clientRepository, times(1)).findMovementsByBankAccountId(eq(bankAccountId));
@@ -121,7 +123,8 @@ class ClientServiceTest {
 
     when(clientRepository.findMovementsByBankAccountId(bankAccountId)).thenReturn(movements);
 
-    assertThrows(es.nextdigital.demo.client.exception.MovementsNotFoundException.class, 
+    assertThrows(
+        es.nextdigital.demo.client.exception.MovementsNotFoundException.class,
         () -> clientService.getMovementsByAccountId(bankAccountId));
 
     verify(clientRepository, times(1)).findMovementsByBankAccountId(null);
