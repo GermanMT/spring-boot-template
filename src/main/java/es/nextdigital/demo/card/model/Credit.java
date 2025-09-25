@@ -23,12 +23,4 @@ public class Credit extends Card {
   @NotNull
   @PositiveOrZero
   private BigDecimal usedCredit = BigDecimal.ZERO;
-
-  public BigDecimal getAvailableCredit() {
-    return creditLimit.subtract(usedCredit);
-  }
-
-  public boolean hasAvailableCredit(BigDecimal amount) {
-    return getAvailableCredit().compareTo(amount) >= 0;
-  }
 }

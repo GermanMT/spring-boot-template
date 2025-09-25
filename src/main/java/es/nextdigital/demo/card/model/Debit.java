@@ -19,12 +19,4 @@ public class Debit extends Card {
   @NotNull
   @PositiveOrZero
   private BigDecimal dailyLimit;
-
-  public boolean hasEnoughBalance(BigDecimal amount) {
-    return getBankAccount().getAccountAmount().compareTo(amount) >= 0;
-  }
-
-  public boolean isWithinDailyLimit(BigDecimal amount) {
-    return dailyLimit.compareTo(amount) >= 0;
-  }
 }
